@@ -1,0 +1,232 @@
+/* --- Modern CSS Reset & Root Variables --- */
+:root {
+  --primary-color: #6366f1; /* Indigo */
+  --primary-hover: #4f46e5;
+  --background-color: #f8fafc; /* Slate 50 */
+  --card-background: #ffffff;
+  --text-primary: #1e293b; /* Slate 800 */
+  --text-secondary: #64748b; /* Slate 500 */
+  --border-color: #e2e8f0; /* Slate 200 */
+  --positive-color: #10b981; /* Emerald 500 */
+  --negative-color: #ef4444; /* Red 500 */
+  --positive-bg: #ecfdf5;
+  --negative-bg: #fee2e2;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  padding-top: 4rem;
+  min-height: 100vh;
+}
+
+/* --- Main App Container & Layout --- */
+.app-container {
+  width: 100%;
+  max-width: 800px;
+  padding: 1rem;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.app-header p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* --- Input Area & Button --- */
+.input-area {
+  background: var(--card-background);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box; /* Important for width */
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.analyze-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.analyze-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.analyze-button:disabled {
+  background-color: #a5b4fc; /* Indigo 300 */
+  cursor: not-allowed;
+  transform: translateY(0);
+}
+
+/* --- Results Section --- */
+.results-section {
+  margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.results-section h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.result-card {
+  background: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.result-card p {
+  margin: 0;
+  padding: 0.5rem 0;
+  color: var(--text-secondary);
+}
+
+.result-card strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.sentiment-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.sentiment-badge.positive {
+  color: var(--positive-color);
+  background-color: var(--positive-bg);
+}
+
+.sentiment-badge.negative {
+  color: var(--negative-color);
+  background-color: var(--negative-bg);
+}
+
+.topics-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.topic-pill {
+  background-color: #eef2ff; /* Indigo 100 */
+  color: var(--primary-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* --- Loader & Error Styling --- */
+.loader-container,
+.error-container {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--primary-color);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.error-message {
+  color: var(--negative-color);
+  background-color: var(--negative-bg);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+}
+
+/* --- Animations --- */
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

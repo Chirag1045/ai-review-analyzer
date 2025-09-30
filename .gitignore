@@ -1,0 +1,10 @@
+# Dependencies & Virtual Environments
+/node_modules
+/backend/venv
+
+# Database file
+/backend/reviews.db
+
+# IDE / System specific files
+.vscode
+.DS_Store
