@@ -1,6 +1,7 @@
 # Dependencies & Virtual Environments
 /node_modules
 /backend/venv
+/backend/__pycache__
 
 # Database file
 /backend/reviews.db
