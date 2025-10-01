@@ -3,7 +3,7 @@ A full-stack web application that transforms raw customer feedback into actionab
 
 **[View the Live Demo](https://ai-review-analyzer.vercel.app/)**
 
-A placeholder for a screenshot of your beautiful application in action.
+![AI Review Analyzer Screenshot](./assets/app-screenshot.png)
 
 ✨ Key Features
 This project was built to move beyond simple prototypes and create a deployable, end-to-end AI solution that solves a real business problem.
