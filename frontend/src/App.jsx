@@ -36,7 +36,7 @@ const ThumbsDownIcon = () => (
     viewBox="0 0 24 24"
     fill="currentColor"
   >
-    <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14-.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41-.17-.79-.44-1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" />
+    <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41-.17-.79-.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z" />
   </svg>
 );
 const HistoryIcon = () => (
@@ -72,7 +72,6 @@ const ResponseIcon = () => (
 );
 
 // --- UI Components ---
-
 const Loader = () => (
   <div className="loader-container">
     <div className="loader"></div>
@@ -121,7 +120,7 @@ const ResultCard = ({ result }) => {
           {result.sentiment.label} ({result.sentiment.score})
         </span>
       </p>
-      <p>
+      <div>
         <strong>Key Topics:</strong>
         <div className="topics-container">
           {result.topics.map((topic) => (
@@ -130,10 +129,7 @@ const ResultCard = ({ result }) => {
             </span>
           ))}
         </div>
-      </p>
-
-      {/* --- NEW SECTION --- */}
-      {/* This will only appear if a suggested_response exists */}
+      </div>
       {result.suggested_response && (
         <div className="suggested-response">
           <h4>
@@ -193,6 +189,10 @@ const HistoricalStatsCard = ({ stats }) => {
   );
 };
 
+// --- Define the API's base URL ---
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:5000";
+
 function App() {
   // --- State Management ---
   const [reviewsText, setReviewsText] = useState("");
@@ -207,20 +207,17 @@ function App() {
 
   const fetchAllTimeStats = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:5000/stats");
+      const response = await axios.get(`${API_BASE_URL}/stats`);
       setAllTimeStats(response.data);
     } catch (err) {
       console.error("Could not fetch historical stats:", err);
-      // Non-critical error, so we don't set the main error state
     }
   };
 
-  // Fetch initial stats when the app loads
   useEffect(() => {
     fetchAllTimeStats();
   }, []);
 
-  // --- Core Logic ---
   const handleAnalyzeClick = async () => {
     if (!reviewsText.trim()) {
       setError("Please paste some reviews before analyzing.");
@@ -232,11 +229,10 @@ function App() {
     setAnalysisResults([]);
 
     try {
-      const response = await axios.post("http://127.0.0.1:5000/analyze", {
+      const response = await axios.post(`${API_BASE_URL}/analyze`, {
         text: reviewsText,
       });
       setAnalysisResults(response.data);
-      // After a successful analysis, refresh the all-time stats
       fetchAllTimeStats();
     } catch (err) {
       console.error("Error communicating with the kitchen:", err);

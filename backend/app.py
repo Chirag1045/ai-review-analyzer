@@ -2,8 +2,13 @@ import flask
 from flask import request, jsonify
 from flask_cors import CORS
 import sqlite3
+import os
 
-# Import all our AI functions, including the new 'generate_response'
+# --- SIMPLIFIED ---
+# We no longer need the token logic here. 
+# ai_processor.py is now fully responsible for it.
+
+# Import all our AI functions from the updated recipe book
 from ai_processor import analyze_sentiment, summarize_text, extract_topics, generate_response
 
 app = flask.Flask(__name__)
@@ -29,10 +34,7 @@ def init_db():
     except Exception as e:
         print(f"Error initializing database: {e}")
 
-# Call init_db when the application starts
-init_db()
-
-# --- API Endpoints ---
+# --- API Endpoints (No changes needed in the routes) ---
 
 @app.route('/analyze', methods=['POST'])
 def analyze_reviews():
@@ -55,17 +57,13 @@ def analyze_reviews():
             summary = summarize_text(review)
             topics = extract_topics(review)
             
-            # --- NEW LOGIC ---
-            # If the review is negative, call our new specialist chef.
             suggested_response = None
             if sentiment and sentiment.get('label') == 'NEGATIVE':
                 suggested_response = generate_response(review)
             
-            # Save the sentiment to our database ledger.
             if sentiment and 'label' in sentiment:
                 cursor.execute("INSERT INTO reviews (sentiment) VALUES (?)", (sentiment['label'],))
 
-            # Add the new 'suggested_response' to our final result package.
             results.append({
                 "original_review": review,
                 "sentiment": sentiment,
@@ -108,6 +106,9 @@ def get_stats():
     except Exception as e:
         print(f"Error fetching stats: {e}")
         return jsonify({"error": "Could not retrieve statistics"}), 500
+
+# Call init_db when the application starts
+init_db()
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
