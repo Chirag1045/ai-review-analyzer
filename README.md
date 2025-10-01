@@ -1,7 +1,7 @@
 🤖 AI-Powered Insight Engine
 A full-stack web application that transforms raw customer feedback into actionable business intelligence using modern AI models. This tool provides sentiment analysis, topic extraction, concise summarization, and AI-generated customer service responses for any given text.
 
-[Live Demo - Coming Soon!]
+**[View the Live Demo](https://ai-review-analyzer.vercel.app/)**
 
 A placeholder for a screenshot of your beautiful application in action.
 
